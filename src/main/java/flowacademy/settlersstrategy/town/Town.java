@@ -22,11 +22,11 @@ public class Town extends Cell {
     private int bankIncome = 0;
     private int populationIncrease;
     private int populationDecrease;
-    private boolean isBarrack;           // Teszt esetében legyen true!!
-    private boolean isBlackshmith;       // Teszt esetében legyen true!!
+    private boolean isBarrack = true;           // Teszt esetében legyen true, amúgy no initialization!!
+    private boolean isBlackshmith = true;       // Teszt esetében legyen true, amúgy no initialization!!
     private boolean isTrainingG;
     private int allRooms = 0;
-    private int allSoldierRooms;           // Teszt esetében legyen 150!!
+    private int allSoldierRooms = 150;           // Teszt esetében legyen 150, amúgy no initialization!!
     private int soldiers = 0;
     private int upgradedSoldiers = 0;
     private static int soldiersPrice = 100;

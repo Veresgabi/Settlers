@@ -24,7 +24,7 @@ public class Army extends Cell {
         this.soldiers = soldiers;
         this.upgradedSoldiers = upgradedSoldiers;
         this.colorSign = colorSingn;
-        this.steps = 10;            // Teszt esetében legyen 60!!
+        this.steps = 60;            // Teszt esetében legyen 60, amúgy 10!!
     }
 
     public static String setColorSign(Player player) {
@@ -57,8 +57,8 @@ public class Army extends Cell {
     }
 
     public void setSteps() {
-        this.steps = 10;
-    }           // Teszt esetében legyen 60!!
+        this.steps = 60;
+    }           // Teszt esetében legyen 60, amúgy 10!!
 
     public void setSteps(int steps) {
         this.steps = steps;

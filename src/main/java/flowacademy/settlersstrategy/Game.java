@@ -490,126 +490,130 @@ public class Game {
                     System.out.println("armyPositionJ: " + armyPositionJ);
                     System.out.println("");
 
-                    System.out.println("Add meg, hogy horizontális irányba mennyit szeretnél lépni (max +10-et, min -10-et lehet)!");
+                    if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() > 0) {
 
-                    Scanner inHor = new Scanner(System.in);
-                    int numJ = inHor.nextInt();
+                        System.out.println("Add meg, hogy horizontális irányba mennyit szeretnél lépni (max +10-et, min -10-et lehet)!");
 
-                    if (Math.abs(numJ) <= player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps()) {
+                        Scanner inHor = new Scanner(System.in);
+                        int numJ = inHor.nextInt();
 
-                        if (numJ > 0) {
-                            for (int j = armyPositionJ + 1; j < Board.board[armyPositionI].length && j <= armyPositionJ + numJ; j++) {
+                        if (Math.abs(numJ) <= player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps()) {
 
-                                if (!(Board.board[armyPositionI][j] instanceof Background)) {
-                                    isBackgroundJ = false;
+                            if (numJ > 0) {
+                                for (int j = armyPositionJ + 1; j < Board.board[armyPositionI].length && j <= armyPositionJ + numJ; j++) {
+
+                                    if (!(Board.board[armyPositionI][j] instanceof Background)) {
+                                        isBackgroundJ = false;
+                                    }
+                                    // így pálya határán nem tud átmenni
+                                    if (isBackgroundJ == true) {
+                                        armyNewPosJ++;
+                                    }
                                 }
-                                // így pálya határán nem tud átmenni
-                                if (isBackgroundJ == true) {
-                                    armyNewPosJ++;
-                                }
-                            }
 
-                            if (!(Board.board[armyPositionI][armyNewPosJ] instanceof Background)) {
-                                armyNewPosJ--;
-                            }
-
-                            System.out.println("isBackgroundJ: " + isBackgroundJ);
-                            System.out.println("armyNewPosJ: " + armyNewPosJ);
-
-                            Board.board[armyPositionI][armyNewPosJ] = Board.board[armyPositionI][armyPositionJ];
-                            Board.board[armyPositionI][armyPositionJ] = new Background(". ");
-
-                            // A megváltozott adatokat beállítjuk az Army-nál
-                            Board.board[armyPositionI][armyNewPosJ].setPositionJ(armyNewPosJ);
-
-                            // Town.HorBorderDown, Town.HorBorder, Town.VertBorder
-
-                            if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getActionPoint() == 0) {
-                                player.setActionPoint(player.getActionPoint() - 1);
-                                player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setActionPoint(1);
-                            }
-
-                            player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setSteps(
-                                    player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() - Math.abs(armyPositionJ - armyNewPosJ));
-
-                            System.out.println("army PositionJ: " + Board.board[armyPositionI][armyNewPosJ].getPositionJ());
-
-                            if (armyNewPosJ < Board.board.length - 1 && armyPositionI < Board.board.length - 1 && armyPositionI > 0) {
-
-                                if ((Board.board[armyPositionI][armyNewPosJ + 1] instanceof Town.VertBorder && !(Board.board[armyPositionI][armyNewPosJ + 1].getColor().equals(player.getColor()))) ||
-                                        (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.HorBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
-                                        (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.HorBorderDown && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
-                                        // (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor())) ) ||
-                                        (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor())))
-                                ) {
-                                    attack(player, player.getArmies().get(Integer.parseInt(armyReader[0]) - 1));
-                                }
-                            }
-
-                            turning(player);
-
-                        }
-                        if (numJ < 0) {
-                            for (int j = armyPositionJ - 1; j >= 0 && j >= armyPositionJ + numJ; j--) {
-                                // így pálya határán nem tud átmenni
-                                if (!(Board.board[armyPositionI][j] instanceof Background)) {
-                                    isBackgroundJ = false;
-                                }
-                                // így pálya határán nem tud átmenni
-                                if (isBackgroundJ == true) {
+                                if (!(Board.board[armyPositionI][armyNewPosJ] instanceof Background)) {
                                     armyNewPosJ--;
                                 }
-                            }
 
-                            if (!(Board.board[armyPositionI][armyNewPosJ] instanceof Background)) {
-                                armyNewPosJ++;
-                            }
+                                System.out.println("isBackgroundJ: " + isBackgroundJ);
+                                System.out.println("armyNewPosJ: " + armyNewPosJ);
 
-                            System.out.println("isBackgroundJ: " + isBackgroundJ);
-                            System.out.println("armyNewPosJ: " + armyNewPosJ);
+                                Board.board[armyPositionI][armyNewPosJ] = Board.board[armyPositionI][armyPositionJ];
+                                Board.board[armyPositionI][armyPositionJ] = new Background(". ");
 
-                            Board.board[armyPositionI][armyNewPosJ] = Board.board[armyPositionI][armyPositionJ];
-                            Board.board[armyPositionI][armyPositionJ] = new Background(". ");
+                                // A megváltozott adatokat beállítjuk az Army-nál
+                                Board.board[armyPositionI][armyNewPosJ].setPositionJ(armyNewPosJ);
 
-                            // A megváltozott adatokat beállítjuk az Army-nál
-                            Board.board[armyPositionI][armyNewPosJ].setPositionJ(armyNewPosJ);
+                                // Town.HorBorderDown, Town.HorBorder, Town.VertBorder
 
-                            if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getActionPoint() == 0) {
-                                player.setActionPoint(player.getActionPoint() - 1);
-                                player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setActionPoint(1);
-                            }
-
-                            player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setSteps(
-                                    player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() - Math.abs(armyPositionJ - armyNewPosJ));
-
-                            if (armyNewPosJ > 0 && armyPositionI < Board.board.length - 1 && armyPositionI > 0) {
-
-                                if ((Board.board[armyPositionI][armyNewPosJ - 1] instanceof Town.VertBorder && !(Board.board[armyPositionI][armyNewPosJ - 1].getColor().equals(player.getColor()))) ||
-                                        (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.HorBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
-                                        (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.HorBorderDown && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
-                                        // (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor())) ) ||
-                                        (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor())))
-                                ) {
-                                    attack(player, player.getArmies().get(Integer.parseInt(armyReader[0]) - 1));
+                                if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getActionPoint() == 0) {
+                                    player.setActionPoint(player.getActionPoint() - 1);
+                                    player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setActionPoint(1);
                                 }
+
+                                player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setSteps(
+                                        player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() - Math.abs(armyPositionJ - armyNewPosJ));
+
+                                System.out.println("army PositionJ: " + Board.board[armyPositionI][armyNewPosJ].getPositionJ());
+
+                                if (armyNewPosJ < Board.board.length - 1 && armyPositionI < Board.board.length - 1 && armyPositionI > 0) {
+
+                                    if ((Board.board[armyPositionI][armyNewPosJ + 1] instanceof Town.VertBorder && !(Board.board[armyPositionI][armyNewPosJ + 1].getColor().equals(player.getColor()))) ||
+                                            (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.HorBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
+                                            (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.HorBorderDown && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
+                                            // (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor())) ) ||
+                                            (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor())))
+                                    ) {
+                                        attack(player, player.getArmies().get(Integer.parseInt(armyReader[0]) - 1));
+                                    }
+                                }
+
+                                turning(player);
+
+                            }
+                            if (numJ < 0) {
+                                for (int j = armyPositionJ - 1; j >= 0 && j >= armyPositionJ + numJ; j--) {
+                                    // így pálya határán nem tud átmenni
+                                    if (!(Board.board[armyPositionI][j] instanceof Background)) {
+                                        isBackgroundJ = false;
+                                    }
+                                    // így pálya határán nem tud átmenni
+                                    if (isBackgroundJ == true) {
+                                        armyNewPosJ--;
+                                    }
+                                }
+
+                                if (!(Board.board[armyPositionI][armyNewPosJ] instanceof Background)) {
+                                    armyNewPosJ++;
+                                }
+
+                                System.out.println("isBackgroundJ: " + isBackgroundJ);
+                                System.out.println("armyNewPosJ: " + armyNewPosJ);
+
+                                Board.board[armyPositionI][armyNewPosJ] = Board.board[armyPositionI][armyPositionJ];
+                                Board.board[armyPositionI][armyPositionJ] = new Background(". ");
+
+                                // A megváltozott adatokat beállítjuk az Army-nál
+                                Board.board[armyPositionI][armyNewPosJ].setPositionJ(armyNewPosJ);
+
+                                if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getActionPoint() == 0) {
+                                    player.setActionPoint(player.getActionPoint() - 1);
+                                    player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setActionPoint(1);
+                                }
+
+                                player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).setSteps(
+                                        player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() - Math.abs(armyPositionJ - armyNewPosJ));
+
+                                if (armyNewPosJ > 0 && armyPositionI < Board.board.length - 1 && armyPositionI > 0) {
+
+                                    if ((Board.board[armyPositionI][armyNewPosJ - 1] instanceof Town.VertBorder && !(Board.board[armyPositionI][armyNewPosJ - 1].getColor().equals(player.getColor()))) ||
+                                            (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.HorBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
+                                            (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.HorBorderDown && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor()))) ||
+                                            // (Board.board[armyPositionI + 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI + 1][armyNewPosJ].getColor().equals(player.getColor())) ) ||
+                                            (Board.board[armyPositionI - 1][armyNewPosJ] instanceof Town.VertBorder && !(Board.board[armyPositionI - 1][armyNewPosJ].getColor().equals(player.getColor())))
+                                    ) {
+                                        attack(player, player.getArmies().get(Integer.parseInt(armyReader[0]) - 1));
+                                    }
+                                }
+
+                                turning(player);
+
                             }
 
-                            turning(player);
+                            if (numJ == 0) {
+                                turning(player);
+                            }
 
-                        }
-
-                        if (numJ == 0) {
-                            turning(player);
-                        }
-
-                    } else {
-                        System.out.println("Ennyit nem tudsz lépni, mert összesen " + player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() + " lépésed van ebben a körben.");
-
-                        if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() > 0) {
-                            armyMove(player, scanner);
                         } else {
-                            turning(player);
+                            System.out.println("Ennyit nem tudsz lépni, mert összesen " + player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() + " lépésed van ebben a körben.");
+
+                            if (player.getArmies().get(Integer.parseInt(armyReader[0]) - 1).getSteps() > 0) {
+                                armyMove(player, scanner);
+                            } else {
+                                turning(player);
+                            }
                         }
+                        turning(player);
                     }
                     turning(player);
                 } else {
@@ -761,7 +765,7 @@ public class Game {
                     System.out.println("Fogyási ráta:" + (defenderThrow * 0.05 + ((double) defTown.getUpgradedSoldiers() / (defTown.getUpgradedSoldiers() + defTown.getSoldiers()) * defenderThrow * 0.05)));
 
                     army.setSoldiers(army.getSoldiers() - (int) Math.floor(army.getSoldiers() * (defenderThrow * 0.05 + ((double) defTown.getUpgradedSoldiers() / (defTown.getUpgradedSoldiers() + defTown.getSoldiers()) * defenderThrow * 0.05))));
-                    System.out.println("A hadseregben " + defTown.getSoldiers() + " katona maradt.");
+                    System.out.println("A hadseregben " + army.getSoldiers() + " katona maradt.");
                     System.out.println("");
 
                 }
@@ -775,7 +779,7 @@ public class Game {
                     System.out.println("Fogyási ráta:" + (defenderThrow * 0.05 + ((double) defTown.getUpgradedSoldiers() / (defTown.getUpgradedSoldiers() + defTown.getSoldiers()) * defenderThrow * 0.05)));
 
                     army.setUpgradedSoldiers(army.getUpgradedSoldiers() - (int) Math.floor(army.getUpgradedSoldiers() * (defenderThrow * 0.05 + ((double) defTown.getUpgradedSoldiers() / (defTown.getUpgradedSoldiers() + defTown.getSoldiers()) * defenderThrow * 0.05))));
-                    System.out.println("A hadseregben " + defTown.getUpgradedSoldiers() + " képzett katona maradt.");
+                    System.out.println("A hadseregben " + army.getUpgradedSoldiers() + " képzett katona maradt.");
                     System.out.println("");
                 }
 
@@ -896,6 +900,7 @@ public class Game {
         player.setGold();
         town.armies.removeAll(town.armies);
         armySearcher(town);
+
         System.out.println(town.getName());
         Cell[][] townBoard = new Cell[11][11];
         for (int i = town.getPositionI() - 5; i < town.getPositionI() + 6; i++) {
@@ -904,6 +909,14 @@ public class Game {
             }
         }
         Board.printBoard(townBoard);
+        System.out.println();
+        if (town.armies.size() > 0 && town.isTrainingG()) {
+            for (int i = 0; i < town.armies.size(); i++) {
+                town.armies.get(i).setUpgradedSoldiers(town.armies.get(i).getUpgradedSoldiers() + town.armies.get(i).getSoldiers());
+                town.armies.get(i).setSoldiers(0);
+            }
+            System.out.println("Hadseregeid Alapszintű katonáinak továbbképzése megtörtént!!");
+        }
         System.out.println();
         System.out.println("Az adóbevételed összege: " + town.getTax() + " arany.");
         System.out.println("A banktól származó bevételed összege: " + town.getBankIncome() + " arany.");
@@ -927,6 +940,9 @@ public class Game {
         System.out.println();
         System.out.println("Az alábbi lehetőségek közül választhatsz (pl. Szállás építése: 3):");
         System.out.println();
+        if (town.armies.size() > 0) {
+            System.out.println("0: hadsereg(ek) kezelése, akik a városhatárnál tartózkodnak");
+        }
         System.out.println("1: 50 katona toborzása. (2 tevékenység pontba kerül. Legalább 50 civil lakos, 100 arany, 50 szabad katonaszállás és Kaszárnya szükséges hozzá.)");
         System.out.println("2: Hadsereg szervezése");
         System.out.println();
@@ -968,7 +984,18 @@ public class Game {
             System.out.println("");
             townMode(town, player);
         }
+
         if (townActionReader.length == 1) {
+
+            if (townActionReader[0].equals("0")) {
+                if (town.armies.size() == 0) {
+                    System.out.println(invalidParams);
+                    townMode(town, player);
+                } else {
+                    armyHandler(town, player);
+                }
+            }
+
             if (townActionReader[0].equals("1")) {
 
                 if (town.getGold() >= 100 && player.getActionPoint() >= 2 && town.getPopulation() >= 50
@@ -982,8 +1009,8 @@ public class Game {
                         town.setUpgradedSoldiers(town.getUpgradedSoldiers() + 50);
                         System.out.println("50 katona toborzása sikeresen megtörtént!! Továbbképzésük szintén sikeres!!");
                         townMode(town, player);
-
-                    } else {
+                    }
+                    else {
                         town.setSoldiers(town.getSoldiers() + 50);
                         System.out.println("50 katona toborzása sikeresen megtörtént!!");
                         townMode(town, player);
@@ -993,6 +1020,7 @@ public class Game {
                     townMode(town, player);
                 }
             }
+
 
             if (townActionReader[0].equals("2")) {
                 if ((town.getSoldiers() > 0 || town.getUpgradedSoldiers() > 0) && town.armies.size() == 0 ) {
@@ -1235,7 +1263,7 @@ public class Game {
 
                             System.out.println("A " + TrainingGround.getName2() + " felépült!!");
                             if (town.getSoldiers() > 0) {
-                                System.out.println(town.getSoldiers() + " katona továbbképzése megtörtént!!");
+                                System.out.println("A városban lévő " + town.getSoldiers() + " katona továbbképzése megtörtént!!");
                             }
                             System.out.println("");
                             town.setUpgradedSoldiers(town.getUpgradedSoldiers() + town.getSoldiers());        // Katonák továbbképzése;
@@ -1243,6 +1271,14 @@ public class Game {
 
                             player.setActionPoint(player.getActionPoint() - 2);
                             town.setTrainingG(true);
+
+                            if (town.armies.size() > 0 && town.isTrainingG()) {
+                                for (int k = 0; k < town.armies.size(); k++) {
+                                    town.armies.get(k).setUpgradedSoldiers(town.armies.get(k).getUpgradedSoldiers() + town.armies.get(k).getSoldiers());
+                                    town.armies.get(k).setSoldiers(0);
+                                }
+                                System.out.println("Hadseregeid Alapszintű katonái továbbképzésben részesültek!!");
+                            }
 
                             townMode(town, player);
                         }
@@ -1302,6 +1338,156 @@ public class Game {
                 townMode(town, player);
             }
         }
+    }
+
+    private void armyHandler(Town town, Player player) {
+
+        String noEnoughParam = "Nem adtál meg elegendő paramétert!";
+        String tooMuchParams = "Túl sok paramétert adtál meg!";
+        String invalidParams = "A megadott paraméterek nem megfelelőek.";
+
+        System.out.println("Válaszd ki a hadseregedet! (pl.: 1)");
+
+        for (int i = 0; i < town.armies.size(); i++) {
+            System.out.println("");
+            System.out.println(i + 1 + ": " + town.armies.get(i).getColorSign());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        String[] armyReader = scanner.nextLine().split("[ ]");
+
+        if (armyReader.length == 0) {
+            System.out.println(noEnoughParam);
+            System.out.println("");
+            townMode(town, player);
+        }
+        if (armyReader.length > 1) {
+            System.out.println(tooMuchParams);
+            System.out.println("");
+            townMode(town, player);
+        }
+        if (armyReader.length == 1 && armyReader[0].matches("[0-9]")) {         // Ha csak egy adatot adott meg és az szám
+            // Így 10 seregnél nem lehet több!!!
+
+            // Ha hadseregként valid számot jelölt meg
+            if (Integer.parseInt(armyReader[0]) - 1 < town.armies.size()) {
+
+                int indexOfArmy = Integer.parseInt(armyReader[0]) - 1;
+
+                if (town.armies.get(indexOfArmy).getSoldiers() > 0 || town.getSoldiers() > 0) {
+
+                    System.out.println("");
+                    System.out.println("Add meg, hogy mennyi Alapszintű katonát szeretnél a seregedhez hozzáadni, vagy a seregedből" +
+                        " a városodba áthelyezni (a városba történő áthelyezés esetében negatív számot használj). A seregedben minimum" +
+                        " 1 katonának maradnia kell!");
+                    System.out.println("");
+                    System.out.println("A városban lévő Alapszintű katonák száma: " + town.getSoldiers());
+                    System.out.println("A " + town.armies.get(indexOfArmy).getColorSign() +
+                        " számú hadseregedben lévő Alapszintű katonák száma: " + town.armies.get(indexOfArmy).getSoldiers());
+
+                    Scanner soldsNum = new Scanner(System.in);
+                    int solds = soldsNum.nextInt();
+
+                // Ha negatív számot adott meg:
+                    if (solds < 0) {
+
+                        if ((town.armies.get(indexOfArmy).getUpgradedSoldiers() == 0
+                            && town.armies.get(indexOfArmy).getSoldiers() <= Math.abs(solds)) ||
+                            (town.armies.get(indexOfArmy).getUpgradedSoldiers() > 0
+                                    && town.armies.get(indexOfArmy).getSoldiers() < Math.abs(solds)) ) {
+
+                            System.out.println("Nincs a seregedben ehhez elég Alapszintű katona.");
+                            System.out.println("");
+                            armyHandler(town, player);
+                        }
+                        if ((town.armies.get(indexOfArmy).getUpgradedSoldiers() == 0
+                                && town.armies.get(indexOfArmy).getSoldiers() > Math.abs(solds)) ||
+                                (town.armies.get(indexOfArmy).getUpgradedSoldiers() > 0
+                                && town.armies.get(indexOfArmy).getSoldiers() >= Math.abs(solds)) ) {
+
+                            town.armies.get(indexOfArmy).setSoldiers(town.armies.get(indexOfArmy).getSoldiers() - Math.abs(solds));
+                            town.setSoldiers(town.getSoldiers() + Math.abs(solds));
+                        }
+
+                    }
+                    if (solds >= 0) {
+
+                        if (town.getSoldiers() < solds) {
+
+                            System.out.println("Nincs a városban ehhez elég Alapszintű katona.");
+                            System.out.println("");
+                            armyHandler(town, player);
+                        }
+
+                        if (town.getSoldiers() >= solds) {
+
+                            town.setSoldiers(town.getSoldiers() - solds);
+                            town.armies.get(indexOfArmy).setSoldiers(town.armies.get(indexOfArmy).getSoldiers() + solds);
+                        }
+                    }
+                }
+                if (town.armies.get(indexOfArmy).getUpgradedSoldiers() > 0 || town.getUpgradedSoldiers() > 0) {
+
+                    System.out.println("");
+                    System.out.println("Add meg, hogy mennyi Képzett katonát szeretnél a seregedhez hozzáadni, vagy a seregedből" +
+                            " a városodba áthelyezni (a városba történő áthelyezés esetében negatív számot használj). A seregedben minimum" +
+                            " 1 katonának maradnia kell!");
+                    System.out.println("");
+                    System.out.println("A városban lévő Képzett katonák száma: " + town.getUpgradedSoldiers());
+                    System.out.println("A " + town.armies.get(indexOfArmy).getColorSign() +
+                            " számú hadseregedben lévő Képzett katonák száma: " + town.armies.get(indexOfArmy).getUpgradedSoldiers());
+
+                    Scanner upgSoldsNum = new Scanner(System.in);
+                    int upgSolds = upgSoldsNum.nextInt();
+
+                    // Ha negatív számot adott meg:
+                    if (upgSolds < 0) {
+
+                        if ((town.armies.get(indexOfArmy).getSoldiers() == 0
+                                && town.armies.get(indexOfArmy).getUpgradedSoldiers() <= Math.abs(upgSolds)) ||
+                                (town.armies.get(indexOfArmy).getSoldiers() > 0
+                                        && town.armies.get(indexOfArmy).getUpgradedSoldiers() < Math.abs(upgSolds))) {
+
+                            System.out.println("Nincs a seregedben ehhez elég Képzett katona.");
+                            System.out.println("");
+                            armyHandler(town, player);
+                        }
+
+                        if ((town.armies.get(indexOfArmy).getSoldiers() == 0
+                                && town.armies.get(indexOfArmy).getUpgradedSoldiers() > Math.abs(upgSolds)) ||
+                                (town.armies.get(indexOfArmy).getSoldiers() > 0
+                                        && town.armies.get(indexOfArmy).getUpgradedSoldiers() >= Math.abs(upgSolds))) {
+
+                            town.armies.get(indexOfArmy).setUpgradedSoldiers(town.armies.get(indexOfArmy).getUpgradedSoldiers() - Math.abs(upgSolds));
+                            town.setUpgradedSoldiers(town.getUpgradedSoldiers() + Math.abs(upgSolds));
+                            townMode(town, player);
+                        }
+                    }
+                    if (upgSolds >= 0) {
+
+                        if (town.getUpgradedSoldiers() < upgSolds) {
+
+                            System.out.println("Nincs a városban ehhez elég Képzett katona.");
+                            System.out.println("");
+                            armyHandler(town, player);
+                        }
+                        if (town.getUpgradedSoldiers() >= upgSolds) {
+
+                            town.setUpgradedSoldiers(town.getUpgradedSoldiers() - upgSolds);
+                            town.armies.get(indexOfArmy).setUpgradedSoldiers(town.armies.get(indexOfArmy).getUpgradedSoldiers() + upgSolds);
+                            townMode(town, player);
+                        }
+                    }
+                }
+                townMode(town, player);
+            }
+            else {
+                System.out.println(invalidParams);
+                System.out.println("");
+                townMode(town, player);
+            }
+        }
+
     }
 
     public void armySearcher(Town town) {
