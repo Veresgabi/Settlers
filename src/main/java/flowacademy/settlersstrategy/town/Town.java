@@ -26,7 +26,7 @@ public class Town extends Cell {
     private boolean isBlackshmith = true;       // Teszt esetében legyen true, amúgy no initialization!!
     private boolean isTrainingG;
     private int allRooms = 0;
-    private int allSoldierRooms = 150;           // Teszt esetében legyen 150, amúgy no initialization!!
+    private int allSoldierRooms = 50;           // Teszt esetében legyen 50 vagy 150, amúgy no initialization!!
     private int soldiers = 0;
     private int upgradedSoldiers = 0;
     private static int soldiersPrice = 100;

@@ -1405,10 +1405,18 @@ public class Game {
                                 (town.armies.get(indexOfArmy).getUpgradedSoldiers() > 0
                                 && town.armies.get(indexOfArmy).getSoldiers() >= Math.abs(solds)) ) {
 
-                            town.armies.get(indexOfArmy).setSoldiers(town.armies.get(indexOfArmy).getSoldiers() - Math.abs(solds));
-                            town.setSoldiers(town.getSoldiers() + Math.abs(solds));
-                        }
+                            if (town.getAllSoldierRooms() < (town.getSoldiers() + town.getUpgradedSoldiers()) + Math.abs(solds)) {
 
+                                System.out.println("Nincs a városban elég hely a katonák elszállásolásához.");
+                                System.out.println("");
+                                armyHandler(town, player);
+                            }
+                            if (town.getAllSoldierRooms() >= (town.getSoldiers() + town.getUpgradedSoldiers()) + Math.abs(solds)) {
+
+                                town.armies.get(indexOfArmy).setSoldiers(town.armies.get(indexOfArmy).getSoldiers() - Math.abs(solds));
+                                town.setSoldiers(town.getSoldiers() + Math.abs(solds));
+                            }
+                        }
                     }
                     if (solds >= 0) {
 
@@ -1458,9 +1466,18 @@ public class Game {
                                 (town.armies.get(indexOfArmy).getSoldiers() > 0
                                         && town.armies.get(indexOfArmy).getUpgradedSoldiers() >= Math.abs(upgSolds))) {
 
-                            town.armies.get(indexOfArmy).setUpgradedSoldiers(town.armies.get(indexOfArmy).getUpgradedSoldiers() - Math.abs(upgSolds));
-                            town.setUpgradedSoldiers(town.getUpgradedSoldiers() + Math.abs(upgSolds));
-                            townMode(town, player);
+                            if (town.getAllSoldierRooms() < (town.getSoldiers() + town.getUpgradedSoldiers()) + Math.abs(upgSolds)) {
+
+                                System.out.println("Nincs a városban elég hely a katonák elszállásolásához.");
+                                System.out.println("");
+                                armyHandler(town, player);
+                            }
+                            if (town.getAllSoldierRooms() >= (town.getSoldiers() + town.getUpgradedSoldiers()) + Math.abs(upgSolds)) {
+
+                                town.armies.get(indexOfArmy).setUpgradedSoldiers(town.armies.get(indexOfArmy).getUpgradedSoldiers() - Math.abs(upgSolds));
+                                town.setUpgradedSoldiers(town.getUpgradedSoldiers() + Math.abs(upgSolds));
+                                townMode(town, player);
+                            }
                         }
                     }
                     if (upgSolds >= 0) {
