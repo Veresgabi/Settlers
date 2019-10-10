@@ -1,5 +1,7 @@
 package flowacademy.settlersstrategy.town;
 
+import flowacademy.settlersstrategy.Player;
+
 public class Barrack extends Building {
 
     private static int price = 200;
@@ -10,6 +12,7 @@ public class Barrack extends Building {
         super(positionI, positionJ, color, id);
         super.setSign("KA");
         super.setName("Kaszárnya");
+        super.setFrontName("Barrack");
     }
 
 

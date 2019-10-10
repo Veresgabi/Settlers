@@ -5,12 +5,20 @@ public abstract class Cell {
     private int positionJ;
     private String color;
     private int id;
+    private String frontName;
 
     public Cell(int positionI, int positionJ, String color, int id) {
         this.positionI = positionI;
         this.positionJ = positionJ;
         this.color = color;
         this.id = id;
+    }
+
+    public Cell(int positionI, int positionJ, String color, String frontName) {
+        this.positionI = positionI;
+        this.positionJ = positionJ;
+        this.color = color;
+        this.frontName = frontName;
     }
 
     public Cell(int positionI, int positionJ, String color) {
@@ -60,6 +68,14 @@ public abstract class Cell {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFrontName() {
+        return frontName;
+    }
+
+    public void setFrontName(String frontName) {
+        this.frontName = frontName;
     }
 
     @Override

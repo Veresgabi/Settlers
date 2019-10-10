@@ -20,8 +20,8 @@ public class Game {
         System.out.println("Az alábbi menüpontok közül választhatsz (pl.: a):");
         System.out.println("");
         System.out.println("a: Új játék indítása");
-        System.out.println("b: Játék betöltése");
-        System.out.println("c: Kilépés a játékból");
+        // System.out.println("b: Játék betöltése");
+        System.out.println("b: Kilépés a játékból");        // Demo esetében legyen b, amúgy c-re van állítva!!
 
         String noEnoughParam = "Nem adtál meg elegendő paramétert!";
         String tooMuchParams = "Túl sok paramétert adtál meg!";
@@ -640,7 +640,7 @@ public class Game {
 
         for (int i = army.getPositionI() + 1; i < Board.board.length && i < army.getPositionI() + 7; i++) {
             for (int j = army.getPositionJ() + 1; j < Board.board[i].length && j < army.getPositionJ() + 7; j++) {
-                if (Board.board[i][j] instanceof Town) {
+                if (Board.board[i][j] instanceof Town && Board.board[i][j].getFrontName().equals("Town")) {
                     defTown = (Town) Board.board[i][j];
                     isTown = true;
                 }
@@ -648,7 +648,7 @@ public class Game {
         }
         for (int i = army.getPositionI() + 1; i < Board.board.length && i < army.getPositionI() + 7; i++) {
             for (int j = army.getPositionJ(); j > -1 && j > army.getPositionJ() - 7; j--) {
-                if (Board.board[i][j] instanceof Town) {
+                if (Board.board[i][j] instanceof Town && Board.board[i][j].getFrontName().equals("Town")) {
                     defTown = (Town) Board.board[i][j];
                     isTown = true;
                 }
@@ -656,7 +656,7 @@ public class Game {
         }
         for (int i = army.getPositionI(); i > -1 && i > army.getPositionI() - 7; i--) {
             for (int j = army.getPositionJ() + 1; j < Board.board[i].length && j < army.getPositionJ() + 7; j++) {
-                if (Board.board[i][j] instanceof Town) {
+                if (Board.board[i][j] instanceof Town && Board.board[i][j].getFrontName().equals("Town")) {
                     defTown = (Town) Board.board[i][j];
                     isTown = true;
                 }
@@ -664,7 +664,7 @@ public class Game {
         }
         for (int i = army.getPositionI(); i > -1 && i > army.getPositionI() - 7; i--) {
             for (int j = army.getPositionJ(); j > -1 && j > army.getPositionJ() - 7; j--) {
-                if (Board.board[i][j] instanceof Town) {
+                if (Board.board[i][j] instanceof Town && Board.board[i][j].getFrontName().equals("Town")) {
                     defTown = (Town) Board.board[i][j];
                     isTown = true;
                 }
@@ -678,7 +678,7 @@ public class Game {
 
         defPlayer = defTown.getPlayer();
 
-        if (defTown.getSoldiers() == 0 && defTown.getUpgradedSoldiers() == 0) {      // Ha nincs egy katona sem a védekező városban
+        if (defTown.getSoldiers() == 0 && defTown.getUpgradedSoldiers() == 0) {      // Ha nincs egy katona sincs a védekező városban
 
             defPlayer.getTowns().remove(defTown);
             attPlayer.getTowns().add(defTown);

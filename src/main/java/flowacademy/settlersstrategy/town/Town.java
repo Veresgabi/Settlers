@@ -22,11 +22,11 @@ public class Town extends Cell {
     private int bankIncome = 0;
     private int populationIncrease;
     private int populationDecrease;
-    private boolean isBarrack = true;           // Teszt esetében legyen true, amúgy no initialization!!
-    private boolean isBlackshmith = true;       // Teszt esetében legyen true, amúgy no initialization!!
+    private boolean isBarrack;           // Teszt esetében legyen true, amúgy no initialization!!
+    private boolean isBlackshmith;       // Teszt esetében legyen true, amúgy no initialization!!
     private boolean isTrainingG;
     private int allRooms = 0;
-    private int allSoldierRooms = 50;           // Teszt esetében legyen 50 vagy 150, amúgy no initialization!!
+    private int allSoldierRooms;           // Teszt esetében legyen 50 vagy 150, amúgy no initialization!!
     private int soldiers = 0;
     private int upgradedSoldiers = 0;
     private static int soldiersPrice = 100;
@@ -41,6 +41,7 @@ public class Town extends Cell {
         this.buildings.add(townhall);
         this.name = name;
         this.player = player;
+        super.setFrontName("Town");
     }
 
     public Town(int positionI, int positionJ, String color, String name) {
@@ -57,6 +58,12 @@ public class Town extends Cell {
         this.name = name;
     }
 
+    public Town(int positionI, int positionJ, String color, int id, Player player) {
+        super(positionI, positionJ, color, id);
+        this.gold = 1000;
+        this.population = (int) (Math.random()*(1000 - 500))+ 500;
+        this.player = player;
+    }
 
     public Town(int positionI, int positionJ, String color) {
         super(positionI, positionJ, color);

@@ -25,7 +25,7 @@ public class Player {
     public Player(String name, String color) {
         this.name = name;
         this.color = color;
-        this.actionPoint = 3;
+        this.actionPoint = 10;              // Teszt esetében lehet több, amúgy 3!!
         this.turn = false;
     }
 
@@ -72,8 +72,8 @@ public class Player {
     }
 
     public void setActionPoint() {
-        this.actionPoint = 3;
-    }
+        this.actionPoint = 10;
+    }       // Teszt esetében lehet több, amúgy 3!!
 
     public boolean isTurn() {
         return turn;
